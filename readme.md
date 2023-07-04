@@ -2,6 +2,29 @@
 
 The Project Management System is a web-based application that facilitates efficient project management, collaboration, and task tracking for teams and individuals. It provides a range of features tailored to different user roles, including Team Managers, Project Managers, and Employees. The system aims to streamline project workflows, enhance communication, and improve overall productivity.
 
+
+Please make sure you have PHP and Composer Installed, and Symfony CLI present in System.
+
+## Installation
+
+To set up the Project Management System locally, follow these steps:
+
+1. Clone the repository: `https://github.com/hemaxip84/projecto.git`
+2. Navigate to the project directory: `cd project-management-system`
+3. checkout Dev branch `git checkout dev`
+4. remane .env.example to .env
+5. change database URL 
+`DATABASE_URL="mysql://user:Your_password@127.0.0.1:3306/projecto`  
+6. run `Composer Install`
+7. create database:
+`symfony console doctrine:database:create`
+8. Run migration  `symfony console doctrine:migration:migrate`
+9. Load Fixtures `symfony console doctrine:fixtures:load`
+10. Install dependencies: `yarn install`
+12. run `yarn encore dev`
+13. run `Symfony serve -d`  
+14. Access the application in your web browser: `http://localhost:8000`
+
 ## Features
 
 ### Common Features
@@ -51,21 +74,6 @@ The Project Management System is a web-based application that facilitates effici
 - **Create Task**: Project Managers can create tasks, assign multiple users, and set task details.
 - **Manage Task**: Project Managers can view and edit task details within projects.
 
-## Installation
-
-To set up the Project Management System locally, follow these steps:
-
-1. Clone the repository: `git clone https://github.com/your-username/project-management-system.git`
-2. Navigate to the project directory: `cd project-management-system`
-3. Install dependencies: `yarn install`
-4. Configure the database connection in `a.env`
-5. Import the database schema from `symfony console make:migration`
-6. Import the database schema from `symfony console doctrine:migration:migrate
-7. Start the development server: `Yarn build` and `yarn watch`
-8. Start the development server: `symfony serve`  
-9. Access the application in your web browser: `http://localhost:3000`
-
-Please make sure you have PHP and a compatible web server installed on your machine.
 
 ## Technologies Used
 
@@ -76,16 +84,3 @@ Please make sure you have PHP and a compatible web server installed on your mach
 - Bootstrap
 - ChartJS
 
-## Contributing
-
-We welcome contributions from everyone. If you'd like to contribute to the project, please follow these steps:
-
-1. Fork the repository
-2. Create a new branch: `git checkout -b feature-name`
-3. Make your changes and commit them: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin feature-name`
-5. Submit a pull request
-
-
-## Contact
-For any inquiries or support, please contact us at kartikpartelswami@gmail.com.
