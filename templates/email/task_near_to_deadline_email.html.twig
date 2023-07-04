@@ -1,0 +1,35 @@
+{% extends 'email/email.base.html.twig'%}
+
+{% block content %}
+	<div class="content">
+		<h1 class="text-center">Have You Missing Out Something 
+			{{ user.Firstname }}</h1>
+		<p class="block text-center ">
+			You Had been assign for  
+			<strong>
+				{{task.Title}}
+			</strong>
+			Task.
+		</p>
+	
+		<p class="block">
+			Task Title :
+			{{ task.Title }}
+		</p>
+		<p class="block">
+			Priority :
+			{{ task.Priority }}
+		</p>
+		<p class=" text-danger block">
+			Duedate :
+			{{ task.actualEndDate | date("m/d/Y")}}
+		</p>
+			<p class="block text-center">
+			<a href="{{ url('app_login') }}">
+				<button class="btn btn-lg btn-primary">
+					Click here to see task
+				</button>
+			</a>
+		</p>
+	</div>
+{% endblock %}

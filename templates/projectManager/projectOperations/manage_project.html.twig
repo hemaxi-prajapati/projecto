@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Manage Project
+{% endblock %}
+
+{% block navbar_options %}
+	{{ include("projectManager/parts/_navbar_pm.html.twig") }}
+{% endblock %}
+
+{% block OprationPannel %}
+	<h1>Manage Project</h1>
+{% endblock %}
+
+
+{% block body %}
+	<div class="container">
+		<div class="d-flex flex-column mt-3">
+			<div class="card">
+				<div class="card-body">
+					{{ include('projectManager/parts/_project_manage_form.html.twig') }}
+					<div class="d-flex justify-content-between mt-3">
+						<a href="{{ path('project_add_team_member', { id: projectId }) }}" class="btn btn-success">
+							+ Add Team Members
+						</a>
+
+						<a href="{{ path('manage_task', { id: projectId }) }}" class="btn btn-danger">
+							Manage Task
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class="d-flex flex-column mt-3">
+			<h3>Project Team</h3>
+			{{ include("parts/_show_employee.html.twig") }}
+		</div>
+	</div>
+{% endblock %}

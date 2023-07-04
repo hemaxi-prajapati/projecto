@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Manage Task
+{% endblock %}
+
+{% block navbar_options %}
+	{{ include('projectManager/parts/_navbar_pm.html.twig')}}
+{% endblock %}
+
+{% block OprationPannel %}
+	<h1>Manage Task Portal</h1>
+
+	{% if app.request.get('id')  %}
+		<div class="text-center">
+			<a href="{{ path('create_task', {id: project.id}) }}">
+				<button type="button" class="btn btn-primary m-3">+ Create Task</button>
+			</a>
+		</div>
+	{% endif %}
+{% endblock %}
+{% block body %}
+	<div class="card w-75 m-auto mt-3">
+	<div class="card-body">
+	<div class="container">
+		<div class="d-flex flex-column mt-3">
+			{% if app.request.get('id')  %}
+				<h3>Tasks List for
+					{{ project.name }}</h3>
+			{% else %}
+	
+				{{ form_start(filterForm,{'attr':{"class" : "d-flex justify-content-evenly align-items-center"}}) }}
+				{{ form_row(filterForm.searchByProjectName) }}
+				{{ form_row(filterForm.searchByEmployee) }}
+				<button class="btn btn-primary">Search</button>
+				{{ form_end(filterForm) }}
+			{% endif %}
+			{{ include('parts/_show_tasks.html.twig') }}
+		</div>
+	</div>
+	</div>
+	</div>
+{% endblock %}

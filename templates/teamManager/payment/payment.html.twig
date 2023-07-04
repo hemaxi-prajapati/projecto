@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Payment
+	{{parent()}}
+{% endblock %}
+
+
+{% block customcss %}
+	<link rel="stylesheet" href="{{ asset('css/payment.css')}}"/>
+{% endblock %}
+
+{% block navbar_options %}{% endblock %}
+
+{% block OprationPannel %}
+
+	<h1>
+		Payment
+	</h1>
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+		<div class="d-flex flex-column mt-3">
+	<h4>
+		you are paying
+
+		<span id="getamount">{{amount}}
+		</span>
+
+	</h4>
+
+	<div id="email-container" data-email="{{app.user.email}}"></div>
+	<div id="amount-container" data-amount="{{amount}}"></div>
+	<img src="{{asset('images/loader.gif')}}" id="loader" width="600px">
+	<form id="payment-form" class="d-none">
+		<div
+			id="link-authentication-element"><!--Stripe.js injects the Link Authentication Element-->
+		</div>
+		<div
+			id="payment-element"><!--Stripe.js injects the Payment Element-->
+		</div>
+		<button id="submit">
+			<div class="spinner hidden" id="spinner"></div>
+			<span id="button-text">Pay now</span>
+		</button>
+		<div id="payment-message" class="hidden"></div>
+
+	</form>
+
+</div>
+</div>
+
+{% endblock %}
+
+{% block customjs %}
+
+	<script src="https://js.stripe.com/v3/"></script>
+	<script src="{{ asset('js/payment.js')}}" defer></script>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Create Task
+{% endblock %}
+
+
+{% block navbar_options %}
+	{% if app.user.roles == is_granted( constant("App\\Entity\\User::ROLE_TEAM_MANAGER") )%}
+		{{ include('teamManager/parts/_navbar_tm.html.twig')}}
+	{% elseif app.user.roles == is_granted( constant("App\\Entity\\User::ROLE_PROJECT_MANAGER") )%}
+		{{ include('projectManager/parts/_navbar_pm.html.twig')}}
+	{% elseif app.user.roles == is_granted( constant("App\\Entity\\User::ROLE_USER") )%}
+		{{ include('employee/parts/_navbar_employee.html.twig')}}
+	{% endif %}
+{% endblock %}
+
+
+{% block OprationPannel %}
+	<h1>Task</h1>
+	{% if app.user.roles == is_granted( constant("App\\Entity\\User::ROLE_PROJECT_MANAGER") )%}
+
+		<a href="{{path('manage_task',{id:project.id})}}">
+			<button type="button" class="btn btn-primary m-3">
+				All Task</button>
+		</a>
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="container">
+		<div class="d-flex flex-column mt-3">
+
+			{{ form_start(createTaskForm) }}
+			{% if app.user.roles != is_granted( constant("App\\Entity\\User::ROLE_PROJECT_MANAGER") )%}
+				<fieldset disabled="disabled">
+				{% endif %}
+
+				{{ form_row(createTaskForm.Title )  }}
+				{{ form_row(createTaskForm.Description) }}
+				{{ form_row(createTaskForm.Priority) }}
+				{{ form_row(createTaskForm.Status) }}
+				<div class="row m-1">
+					<div class="col md-3">
+						{{ form_row(createTaskForm.ActualStartDate) }}
+					</div>
+					<div class="col md-3">
+						{{ form_row(createTaskForm.ActualEndDate) }}</div>
+				</div>
+
+				<h4>
+					Assign Task to
+				</h4>
+				<table class=" table-hover table table-bordered">
+					<thead>
+						<tr>
+							<th>User Id</th>
+							<th>User Name</th>
+							<th>Department</th>
+							<th>Assign Task</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for userAssignTask in userAssignTaskarray %}
+							{% if userAssignTask.id in users|keys %}
+								<tr>
+									<td>{{ userAssignTask.id }}</td>
+									<td>{{ userAssignTask.name }}</td>
+									<td>{{ userAssignTask.department }}</td>
+									<td><input type="checkbox" class="form-check-input" name="assignedTo[]" value="{{ userAssignTask.id }}" checked></td>
+								</tr>
+							{% else %}
+								{% if app.user.roles == is_granted( constant("App\\Entity\\User::ROLE_PROJECT_MANAGER") )%}
+									<tr>
+										<td>{{ userAssignTask.id }}</td>
+										<td>{{ userAssignTask.name }}</td>
+										<td>{{ userAssignTask.department }}</td>
+										<td>
+											<input type="checkbox" class="form-check-input" id="assignedto{{userAssignTask.id}}" name="assignedTo[]" value="{{ userAssignTask.id }}">
+										</td>
+									</tr>
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</select>
+
+
+			<br/>
+			{% if app.user.roles != is_granted( constant("App\\Entity\\User::ROLE_PROJECT_MANAGER") )%}
+			</fieldset>
+		{% else %}
+
+			<button type="submit" class="btn btn-primary" id="createTaskBtn">
+				Submit
+			</button>
+		{% endif %}
+		{{ form_end(createTaskForm) }}
+	</div>
+{% endblock %}

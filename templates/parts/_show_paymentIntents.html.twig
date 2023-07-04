@@ -1,0 +1,41 @@
+{% if paymentIntents is not empty %}
+	<div class="mt-3 card">
+		<div class="card-body">
+			<h5 class="card-title">Payment Intents</h5>
+			<table class=" table-hover table table-striped">
+				<thead class="table-light">
+					<tr>
+						<th scope="col">Sr</th>
+						<th scope="col">Payment ID</th>
+						<th scope="col">Amount</th>
+						<th scope="col">Received Amount</th>
+						<th scope="col">Payment Method</th>
+						<th scope="col">Done On</th>
+						<th scope="col">Customer</th>
+						<th scope="col">Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% set count = 1 %}
+					{% for paymentIntent in paymentIntents %}
+						<tr>
+							<th scope="row">{{ count }}</th>
+							<td>{{ paymentIntent.PaymentId }}</td>
+							<td>{{ (paymentIntent.Amount / 100) | format_currency('INR') }}</td>
+							<td>{{ (paymentIntent.ReceivedAmount / 100) | format_currency('INR') }}</td>
+							<td>{{ paymentIntent.PaymentMethod }}</td>
+							<td>{{ paymentIntent.CreatedTimestamp | date("d/m/Y H:i:s", "Asia/Calcutta") }}</td>
+							<td>{{ paymentIntent.CustomerId }}</td>
+							<td>{{ paymentIntent.status }}</td>
+						</tr>
+						{% set count = count + 1 %}
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% else %}
+	<div class="alert alert-danger" role="alert">
+		Oops! No paymentIntents found.
+	</div>
+{% endif %}

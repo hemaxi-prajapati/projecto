@@ -1,0 +1,12 @@
+
+@import "~bootstrap";
+
+
+input[type=radio]{
+    transform:scale(1.5);
+  }
+
+.container{
+
+  width: 100%;
+}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}  Transactions | {{parent()}}
+{% endblock %}
+
+{% block navbar_options %}
+{{ include('teamManager/parts/_navbar_tm.html.twig')}}
+{% endblock %}
+
+{% block OprationPannel %}
+
+
+	<h1>  Transactions </h1>
+
+{% endblock %}
+{% block body %}
+
+
+  <div class="container">
+	
+	
+	{% include('parts/_show_paymentIntents.html.twig')%}
+
+	
+</div>
+{% endblock %}

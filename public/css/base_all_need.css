@@ -1,0 +1,16 @@
+@keyframes progressAnimation {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+    }
+}
+
+.progress-animation {
+    animation: progressAnimation 4s linear;
+}
+
+.alertBoxMain {
+    z-index: 1000;
+}

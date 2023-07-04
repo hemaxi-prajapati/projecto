@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Projects
+	{{parent()}}
+{% endblock %}
+
+{% block navbar_options %}
+	{{ include('teamManager/parts/_navbar_tm.html.twig')}}
+{% endblock %}
+
+
+{% block OprationPannel %}
+
+
+	<h1>Show Projects</h1>
+	<a href="{{ path('csv_download') }}">
+		<button type="button" class="btn btn-info">
+			Download CSV
+		</button>
+	</a>
+
+{% endblock %}
+
+{% block body %}
+	<div class="card m-5">
+		<div class="card-body">
+			<div class="mt-3">
+				{{ include("teamManager/parts/filterProject.html.twig") }}
+			</div>
+			{% include('parts/_show_all_projects.html.twig')%}
+		</div>
+	</div>
+
+
+{% endblock %}

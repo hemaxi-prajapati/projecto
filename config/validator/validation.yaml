@@ -1,0 +1,24 @@
+App\Entity\User:
+    properties:
+        Firstname:
+            - Regex:
+                pattern: '/[a-zA-Z]+$/'
+                match:   true
+                message: name should contain only alphabets
+        LastName:
+            - Regex:
+                pattern: '/[a-zA-Z]+$/'
+                match: true
+                message: Name Should Contain Only Alphabets
+        email:
+            - Email:
+                message: The email "{{ value }}" is not a valid email.
+
+        ContactNumber: 
+            - NotNull:
+                message: The number not to be blank.
+            - Regex:
+                pattern: '/^[0-9]{10}$/'
+                match: true
+                message: Contact must contains only numbers with only 10 digit
+

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	All Projects
+{% endblock %}
+
+
+{% block navbar_options %}
+	{{ include('projectManager/parts/_navbar_pm.html.twig')}}
+{% endblock %}
+
+{% block OprationPannel %}
+	<h1>
+		{{app.request.get('status')}}
+		Projects
+	</h1>
+	<a href="{{path('app_create_project')}}">
+		<button type="button" class="btn btn-primary m-3">+ Create Project</button>
+	</a>
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid text-center ">
+		<div class="card w-75 m-auto">
+			<div class="card-body">
+				<div class="row">
+					{{ form_start(filterForm,{'attr':{"class" : "d-flex justify-content-center align-items-center"}}) }}
+					{{ form_row(filterForm.ProjectName,{ 'attr': {'class': 'align-items-center'} }) }}
+					<button class="btn btn-primary mt-3 ms-2">Search</button>
+					{{ form_end(filterForm) }}
+				</div>
+				{% include('parts/_show_all_projects.html.twig')%}
+			</div>
+		</div>
+		{# </div> #}
+
+	{% endblock %}

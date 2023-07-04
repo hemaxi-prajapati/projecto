@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} 
+Create Employee {{parent()}}
+{% endblock %}
+
+{% block navbar_options %}
+{{ include('teamManager/parts/_navbar_tm.html.twig')}}
+{% endblock %}
+
+
+{% block OprationPannel %}
+	<h1>Create Employee</h1>
+{% endblock %}
+{% block body %}
+<div class="container">
+	<div class="d-flex flex-column mt-3">
+	{{ include("parts/_employee_create_form.html.twig") }}
+	</div>
+</div>
+{% endblock %}

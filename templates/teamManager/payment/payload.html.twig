@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Show Employee
+	{{parent()}}
+{% endblock %}
+
+{% block navbar_options %}
+	{{ include('teamManager/parts/_navbar_tm.html.twig')}}
+{% endblock %}
+
+{% block customcss %}{% endblock %}
+{% block OprationPannel %}
+
+	<h1>Show Employee</h1>
+
+	<a href="{{path('create_employee')}}">
+		<button type="button" id="createUserBtn" class="btn btn-primary">+ Add Employee</button>
+	</a>
+
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="d-flex flex-column mt-3">
+			<div class="card m-5">
+				<div class="card-body">
+					<div class="mt-3">
+						{{ include("teamManager/parts/filterEmployee.html.twig") }}
+						<table class=" table-hover table table-hover table-bordered">
+							<thead>
+								<tr>
+									<th scope="col">Sr</th>
+									<th scope="col">Employee ID</th>
+									<th scope="col">Employee Name</th>
+									<th scope="col">Department</th>
+									<th scope="col">Pay</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% set count=1 %}
+
+								{% for user in users %}
+
+									<tr>
+										<th scope="row">
+											{{ count }}
+											{% set count=count+1 %}
+										</th>
+										<td>{{user.id}}</td>
+										<td>{{user.name}}</td>
+
+										<td>
+											{% if user.Department %}
+												{{user.Department}}
+											{% else %}
+												Still Pending
+											{% endif %}
+
+										</td>
+
+										<td>
+											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+												Pay
+											</button>
+
+											<!-- Modal -->
+											<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog modal-dialog-centered">
+													<div class="modal-content">
+														<form action="{{path('stripe')}}" method="POST" name="amountForm">
+															<div class="modal-header">
+																<h5 class="modal-title" id="exampleModalLabel">
+																	Enter Amount
+																</h5>
+																<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div class="modal-body">
+																<input type="number" class="form-control" id="amount" placeholder="Add amount you wish to pay" name="amount">
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+																<button type="submit" class="btn btn-primary">pay</button>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							{% endfor %}
+						</tbody>
+					</table>
+					{{ pagerfanta(users) }}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

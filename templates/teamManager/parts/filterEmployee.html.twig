@@ -1,0 +1,5 @@
+{{ form_start(filterForm,{ 'attr' : { 'class': 'd-flex justify-content-evenly align-self-center align-items-center' } }) }}
+{{ form_row(filterForm.searchBy) }}
+{{ form_row(filterForm.value,{'required': false}) }}
+<button type="submit" class="btn btn-primary">Search</button>
+{{ form_end(filterForm) }}

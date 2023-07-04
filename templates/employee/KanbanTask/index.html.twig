@@ -1,0 +1,226 @@
+{% extends 'base.html.twig' %}
+{% block title %}Employee Dashboard
+{% endblock %}
+{% block customcss %}
+	<link rel="stylesheet" type="text/css" href="/employeeCss/dragAndDrop.css"/>
+{% endblock %}
+{% block navbar_options %}
+	{{ include('employee/parts/_navbar_employee.html.twig')}}
+{% endblock %}
+{% block body %}
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		<div class="project-card" onclick="toggleProjectDetails('{{ project.id }}')">
+			<div class="project-header">
+				<h3 class="project-name" data-bs-toggle="collapse" data-bs-target="#project-details-{{ project.id }}">{{ project.name }}</h3>
+				<span class="project-status">{{ project.status }}</span>
+			</div>
+			<div id="project-details-{{ project.id }}" class="collapse">
+				<p class="project-description">{{ project.description }}</p>
+				<div class="project-details">
+					<div class="detail">
+						<span class="detail-label">Project Manager:</span>
+						<span class="detail-value">{{ project.ProjectManager.Name }}</span>
+					</div>
+					<div class="detail">
+						<span class="detail-label">Start Date:</span>
+						<span class="detail-value">{{ project.startDate|date('d-m-Y') }}</span>
+					</div>
+					<div class="detail">
+						<span class="detail-label">End Date:</span>
+						<span class="detail-value">{{ project.endDate|date('d-m-Y') }}</span>
+					</div>
+					{% if project.UrlAttachment %}
+						<div class="detail">
+							<span class="detail-label">Project Report:</span>
+							<embed src="{{ project.UrlAttachment }}" width="400" height="528" type="application/pdf">
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="main-container">
+			<ul class="columns">
+				<li class="column to-do-column">
+					<div class="column-header">
+						<h4>Open</h4>
+					</div>
+					{% for task in tasks %}
+						<ul class="task-list swim-lane" id="Open">
+							{% if task.status == constant('App\\Entity\\TaskWithProject::TASK_STATUS_OPEN') %}
+								<li class="task" id="{{ task.id }}" data-id="{{ task.id }}" data-pid="{{ project.id }}" draggable="true">
+									<p>{{ task.title }}</p>
+								</li>
+							{% endif %}
+						</ul>
+					{% endfor %}
+				</li>
+				<li class="column doing-column">
+					<div class="column-header">
+						<h4>In Progress</h4>
+					</div>
+					{% for task in tasks %}
+						<ul class="task-list swim-lane" id="In_Progress">
+							{% if task.status ==  constant('App\\Entity\\TaskWithProject::TASK_STATUS_IN_PROGRESS') %}
+								<li class="task" id="{{ task.id }}" data-pid="{{ project.id }}" data-id="{{ task.id }}" draggable="true">
+									<p>{{ task.title }}</p>
+								</li>
+							{% endif %}
+						</ul>
+					{% endfor %}
+				</li>
+				<li class="column done-column">
+					<div class="column-header">
+						<h4>Completed</h4>
+					</div>
+					{% for task in tasks %}
+						<ul class="task-list swim-lane" id="Completed">
+							{% if task.status == constant('App\\Entity\\TaskWithProject::TASK_STATUS_COMPLETED') %}
+								<li class="task" id="{{ task.id }}" data-id="{{ task.id }}" data-pid="{{ project.id }}" draggable="true">
+									<p>{{ task.title }}</p>
+								</li>
+							{% endif %}
+						</ul>
+					{% endfor %}
+				</li>
+				<li class="column trash-column">
+					<div class="column-header">
+						<h4>On Hold</h4>
+					</div>
+					{% for task in tasks %}
+						<ul class="task-list swim-lane" id="On_Hold">
+							{% if task.status == constant('App\\Entity\\TaskWithProject::TASK_STATUS_ON_HOLD') %}
+								<li class="task" id="{{ task.id }}" data-id="{{ task.id }}" data-pid="{{ project.id }}" draggable="true">
+									<p>{{ task.title }}</p>
+								</li>
+							{% endif %}
+						</ul>
+					{% endfor %}
+				</li>
+			</ul>
+		</div>
+	{% endif %}
+	{% verbatim %}
+		<script>
+
+			function toggleProjectDetails(projectId) {
+var projectDetails = document.getElementById('project-details-' + projectId);
+projectDetails.classList.toggle('show');
+}
+
+
+const draggables = document.querySelectorAll(".task");
+
+const droppables = document.querySelectorAll(".swim-lane");
+
+draggables.forEach((task) => {
+
+task.addEventListener("dragstart", () => {
+
+task.classList.add("is-dragging");
+
+});
+
+task.addEventListener("dragend", () => {
+
+task.classList.remove("is-dragging");
+
+});
+
+task.addEventListener("click", (e) => {
+
+e.preventDefault();
+
+const taskId = task.getAttribute("data-id");
+const projectId = task.getAttribute("data-pid");
+
+const url = "/Tasks/View/?tid=" + taskId + "&id=" + projectId;
+
+window.location.href = url;
+
+});
+
+});
+
+droppables.forEach((zone) => {
+
+zone.addEventListener("dragover", (e) => {
+
+e.preventDefault();
+
+const bottomTask = insertAboveTask(zone, e.clientY);
+
+const curTask = document.querySelector(".is-dragging");
+
+var id = curTask.getAttribute("id");
+
+var changedTasktype = zone.getAttribute("id");
+
+var url = "/changeTaskStatus";
+
+changedTasktype = changedTasktype.replace(/_/g, ' ');
+
+
+if (! bottomTask) {
+
+zone.appendChild(curTask);
+
+} else {
+
+zone.insertBefore(curTask, bottomTask);
+
+}
+
+$.ajax({
+
+url: "/changeTaskStatus",
+
+method: "GET",
+
+data: {
+
+"id": id,
+
+"changedTasktype": changedTasktype
+
+},
+
+success: function (data) {},
+
+error: function (xhr, status, err) {}
+
+});
+
+});
+
+});
+
+const insertAboveTask = (zone, mouseY) => {
+
+const els = zone.querySelectorAll(".task:not(.is-dragging)");
+
+let closestTask = null;
+
+let closestOffset = Number.NEGATIVE_INFINITY;
+
+els.forEach((task, ui) => {
+
+const {top} = task.getBoundingClientRect();
+
+const offset = mouseY - top;
+
+if (offset < 0 && offset > closestOffset) {
+
+closestOffset = offset;
+
+closestTask = task;
+
+}
+
+});
+
+return closestTask;
+
+};
+		</script>
+	{% endverbatim %}
+{% endblock %}

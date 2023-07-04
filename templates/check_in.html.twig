@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Timer
+{% endblock %}
+
+{% block customcss %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/tableExpandable.css') }}">
+{% endblock %}
+
+{% block customjs %}
+	<script src="{{ asset('js/expandableTimerTable.js') }}"></script>
+{% endblock %}
+{% block navbar_options %}
+	{% if app.user.roles == is_granted(constant("App\\Entity\\User::ROLE_TEAM_MANAGER")) %}
+		{{ include('teamManager/parts/_navbar_tm.html.twig') }}
+	{% elseif app.user.roles == is_granted(constant("App\\Entity\\User::ROLE_PROJECT_MANAGER")) %}
+		{{ include('projectManager/parts/_navbar_pm.html.twig') }}
+	{% elseif app.user.roles == is_granted(constant("App\\Entity\\User::ROLE_USER")) %}
+		{{ include('employee/parts/_navbar_employee.html.twig') }}
+	{% endif %}
+{% endblock %}
+
+{% block OprationPannel %}
+	<h1>Timer</h1>
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="card mt-3">
+			<div class="card-body">
+				{{ form_start(filterForm) }}
+				<div class="row form-inline">
+					<div class="col-md-4 mb-3">
+						{{ form_row(filterForm.from) }}
+					</div>
+					<div class="col-md-4 mb-3">
+						{{ form_row(filterForm.to) }}
+					</div>
+					<div class="col-md-4 align-self-center">
+						<button class="btn btn-primary">Filter</button>
+					</div>
+				</div>
+				{{ form_end(filterForm) }}
+
+				<div class="mt-4">
+					{% include('parts/_show_attendance.html.twig') %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,7 @@
+{{ form_start(filterForm, {'attr': {'class': 'd-flex justify-content-evenly align-self-center align-items-center'}}) }}
+<div class="input-group mb-3">
+	{{ form_row(filterForm.searchByProjectName, {'attr': {'class':  'placeholder': 'Search by Project Name'}}) }}
+	{{ form_row(filterForm.searchByEmployee, {'attr': {'class': 'placeholder': 'Search by Employee'}}) }}
+	<button type="submit" class="btn btn-primary">Search</button>
+</div>
+{{ form_end(filterForm) }}

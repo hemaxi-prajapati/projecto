@@ -1,0 +1,5 @@
+{{ form_start(filterForm,{ 'attr' : { 'class': 'd-flex justify-content-evenly align-self-center align-items-center' } }) }}
+{{ form_row(filterForm.ProjectName,{'required': false}) }}
+{{ form_row(filterForm.ProjectManager) }}
+<button type="submit" class="btn btn-primary">Search</button>
+{{ form_end(filterForm) }}

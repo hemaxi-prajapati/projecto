@@ -1,0 +1,13 @@
+<div class="card">
+	<div class="card-body">
+		{{ form_start(createMeetingForm) }}
+		{{ form_row(createMeetingForm.subject) }}
+		{{ form_row(createMeetingForm.meetingStartTime) }}
+		{{ form_row(createMeetingForm.meetingEndTime) }}
+		{{ form_row(createMeetingForm.meetingAssign) }}
+		<button type="submit" class="btn btn-primary">
+			Create Meeting
+		</button>
+		{{ form_end(createMeetingForm) }}
+	</div>
+</div>

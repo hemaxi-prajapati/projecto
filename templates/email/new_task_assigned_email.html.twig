@@ -1,0 +1,29 @@
+{% extends 'email/email.base.html.twig'%}
+
+{% block content %}
+	<div class="content">
+		<h1 class="text-center">Nice to meet you
+			{{ user.Name }}</h1>
+		<p class="block text-center ">
+			A
+			<strong>
+				New</strong>
+			Task have been assigned to you
+		</p>
+		<p class="block text-center">
+			<a href="{{ url('project_manager_dashboard') }}">
+				<button class="btn btn-lg btn-primary">
+					Click here to see task
+				</button>
+			</a>
+		</p>
+		<p class="block">
+			Task Title :
+			{{ task.Title }}
+		</p>
+		<p class="block">
+			Priority :
+			{{ task.Priority }}
+		</p>
+	</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Dashboard
+	{{ parent() }}
+{% endblock %}
+
+{% block navbar_options %}
+	{{ include('teamManager/parts/_navbar_tm.html.twig') }}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid mt-3" style="padding: 20px 100px">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="card bg-light mb-3">
+					<div class="card-body">
+						<h3 class="card-title">Project Status</h3>
+						{{ render_chart(chartProject) }}
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-6">
+				<div class="row row-cols-1 row-cols-md-2 g-4">
+					<div class="col">
+						<div class="card bg-primary text-white">
+							<a class="nav-link text-white" href="{{ path('show_projects') }}">
+								<div class="card-body">
+									<h5 class="card-title">Total Projects</h5>
+									<p class="card-text fs-2">{{ allProjectsCount }}</p>
+								</div>
+							</a>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card bg-danger text-white">
+							<a class="nav-link text-white" href="{{ path('show_projects', {status: constant('App\\Entity\\ProjectDetails::PROJECT_STATUS_IN_PROGRESS')}) }}">
+								<div class="card-body">
+									<h5 class="card-title">In Progress</h5>
+									<p class="card-text fs-2">{{ inProgressProjectsCount }}</p>
+								</div>
+							</a>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card bg-secondary text-white">
+							<a class="nav-link text-white" href="{{ path('show_projects', {status: constant('App\\Entity\\ProjectDetails::PROJECT_STATUS_OPEN')}) }}">
+								<div class="card-body">
+									<h5 class="card-title">Open</h5>
+									<p class="card-text fs-2">{{ openProjectsCount }}</p>
+								</div>
+							</a>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card bg-warning text-white">
+							<a class="nav-link text-white" href="{{ path('show_projects', {status: constant('App\\Entity\\ProjectDetails::PROJECT_STATUS_ON_HOLD'), count: onHoldProjectsCount}) }}">
+								<div class="card-body">
+									<h5 class="card-title">On Hold</h5>
+									<p class="card-text fs-2">{{ onHoldProjectsCount }}</p>
+								</div>
+							</a>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card bg-success text-white">
+							<a class="nav-link text-white" href="{{ path('show_projects', {status: constant('App\\Entity\\ProjectDetails::PROJECT_STATUS_COMPLETED'), count: completedProjectsCount}) }}">
+								<div class="card-body">
+									<h5 class="card-title">Completed</h5>
+									<p class="card-text fs-2">{{ completedProjectsCount }}</p>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="p-3 bg-light" style="max-width: 400px; left: 1348px; top: 493px;">
+					<h3>Employee Status</h3>
+					{{ render_chart(chartEmployee) }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

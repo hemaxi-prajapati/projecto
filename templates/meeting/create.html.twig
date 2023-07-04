@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Meeting Create
+{% endblock %}
+
+{% block navbar_options %}
+	{% if app.user.roles == is_granted( constant("App\\Entity\\User::ROLE_TEAM_MANAGER") )%}
+		{{ include('teamManager/parts/_navbar_tm.html.twig')}}
+	{% elseif app.user.roles == is_granted( constant("App\\Entity\\User::ROLE_PROJECT_MANAGER") )%}
+		{{ include('projectManager/parts/_navbar_pm.html.twig')}}
+	{% elseif app.user.roles == is_granted( constant("App\\Entity\\User::ROLE_USER") )%}
+		{{ include('employee/parts/_navbar_employee.html.twig')}}
+	{% endif %}
+{% endblock %}
+{% block OprationPannel %}
+	<h1 class="mb-4">Meetings Create</h1>
+	<div class="d-flex justify-content-center">
+		<a href="{{ path('meeting_view') }}">
+			<button type="button" class="btn btn-primary">View Meetings</button>
+		</a>
+	</div>
+{% endblock %}
+{% block body %}
+	<div class="container">
+		{{ include("parts/_form_create_meeting.html.twig") }}
+	</div>
+{% endblock %}

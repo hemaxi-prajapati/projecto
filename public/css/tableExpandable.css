@@ -1,0 +1,10 @@
+.expanded-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }
+
+  .expanded-row.show .expanded-content {
+    max-height: 1000px; /* Adjust the value as needed */
+    transition: max-height 0.3s ease-in;
+  }

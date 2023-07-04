@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Requested Employee
+	{{parent()}}
+{% endblock %}
+
+{% block navbar_options %}
+	{{ include('teamManager/parts/_navbar_tm.html.twig')}}
+{% endblock %}
+
+{% block OprationPannel %}
+
+
+	<h1>Show Requested Employee</h1>
+
+{% endblock %}
+{% block body %}
+
+
+	<div class="container">
+		<div class="d-flex flex-column mt-3">
+			<div class="card m-5">
+				<div class="card-body">
+					{% include('parts/_show_employee.html.twig')%}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

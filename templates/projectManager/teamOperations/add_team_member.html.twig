@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Team Manage
+{% endblock %}
+
+
+{% block navbar_options %}
+	{{ include('projectManager/parts/_navbar_pm.html.twig')}}
+{% endblock %}
+
+{% block OprationPannel %}
+	<h1>Project Team manage</h1>
+
+
+{% endblock %}
+
+
+{% block body %}
+	<div class="card w-75 m-auto mt-3">
+		<div class="card-body">
+	
+			<div class="container">
+				<div class="d-flex flex-column mt-3">
+					<h3 class="mt-3 mb-4"> Request Employee For Your Project </h3>
+				</div>
+
+
+						{% if users.nbResults <= 0 %}
+							<div class="alert alert-danger" role="alert">
+								Opps ! No Employee
+							</div>
+						{% else %}
+
+
+		<table class=" table-hover table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th scope="col">Sr</th>
+					<th scope="col">Employee ID</th>
+					<th scope="col">Employee Name</th>
+					<th scope="col">Department</th>
+					<th scope="col">Request</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% set count=1 %}
+
+						{% for user in users %}
+
+							<tr>
+								<th scope="row">
+									{{ count }}
+									{% set count=count+1 %}
+								</th>
+								<td>{{user.id}}</td>
+								<td>{{user.firstName}}</td>
+								<td>
+									{{  user.department ? user.department.Name:"NO Department" }}
+								</td>
+								<td>
+									<a href="{{path('request_user_for_project',{userId:user.id,projectId:projectId})}}">
+										<button class="btn btn-warning" type="submit" name="action" value="edit">
+											Request Employee
+										</button>
+									</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{{ pagerfanta(users) }}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

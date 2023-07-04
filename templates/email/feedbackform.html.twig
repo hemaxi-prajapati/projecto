@@ -1,0 +1,28 @@
+{% extends 'email/email.base.html.twig' %}
+
+{% block content %}
+	<div class="content" style="text-align: center; font-family: Arial, sans-serif;">
+		<h1 style="font-size: 24px; margin-bottom: 20px;">
+			Feedback form from {{ Feedbackform.name }}
+		</h1>
+		<p class="block" style="margin-bottom: 10px;">
+			<strong></strong>
+		</p>
+		<br/>
+		<p class="block" style="text-align: center; margin-bottom: 10px;">
+			Dear Projecto!
+		</p>
+		<p class="block" style="text-align: center; margin-bottom: 10px;">
+			<strong>Name:</strong> {{ Feedbackform.name }}
+		</p>
+		<p class="block" style="text-align: center; margin-bottom: 10px;">
+			<strong>Email:</strong> {{ Feedbackform.email }}
+		</p>
+		<p class="block" style="text-align: center; margin-bottom: 10px;">
+			<strong>Subject:</strong> {{ Feedbackform.subject }}
+		</p>
+		<p class="block" style="text-align: center; margin-bottom: 10px;">
+			<strong>Message:</strong> {{ Feedbackform.message }}
+		</p>
+	</div>
+{% endblock %}

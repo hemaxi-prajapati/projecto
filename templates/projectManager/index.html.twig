@@ -1,0 +1,150 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Dashboard
+{% endblock %}
+
+{% block navbar_options %}
+	{{ include('projectManager/parts/_navbar_pm.html.twig')}}
+{% endblock %}
+
+{% block body %}
+
+	<div class="container-fluid mt-3" style="padding: 20px 100px">
+
+		<div class="container-fluid mt-3 d-flex">
+			<div class="d-flex rounded m-3">
+
+				<div class="m-3 p-3 bg-light" style="max-width: 400px">
+					<h3>Project Status</h3>
+					{{ render_chart(chartProject) }}
+				</div>
+
+				<div class="row justify-content-center">
+					<h1 class="ms-5">Projects</h1>
+					<div class="card text-white bg-primary m-3 text-right" style="max-width: 18rem;">
+						<a class="nav-link" href="{{ path('app_project_manager_projects') }}">
+							<div class="card-body m-2">
+								<h5 class="card-title p-1">Total Projects</h5>
+								<p class="card-text fs-2 text-end">{{ allProjectsCount }}</p>
+							</div>
+						</a>
+					</div>
+
+					<div class="card text-white bg-danger m-3 text-right" style="max-width: 18rem;">
+						<a class="nav-link" href="{{ path('app_project_manager_projects', {status: constant('App\\Entity\\ProjectDetails::PROJECT_STATUS_IN_PROGRESS')}) }}">
+							<div class="card-body m-2">
+								<h5 class="card-title p-1">In Progress</h5>
+								<p class="card-text fs-2 text-end">{{ inProgressProjectsCount }}</p>
+							</div>
+						</a>
+					</div>
+
+					<div class="card text-white bg-secondary m-3 text-right" style="max-width: 18rem;">
+						<a class="nav-link" href="{{ path('app_project_manager_projects', {status: constant('App\\Entity\\ProjectDetails::PROJECT_STATUS_OPEN')}) }}">
+							<div class="card-body m-2">
+								<h5 class="card-title p-1">Open</h5>
+								<p class="card-text fs-2 text-end">{{ openProjectsCount }}</p>
+							</div>
+						</a>
+					</div>
+
+					<div class="card text-white bg-warning m-3 text-right" style="max-width: 18rem;">
+						<a class="nav-link" href="{{ path('app_project_manager_projects', {status: constant('App\\Entity\\ProjectDetails::PROJECT_STATUS_ON_HOLD')}) }}">
+							<div class="card-body m-2">
+								<h5 class="card-title p-1">On Hold</h5>
+								<p class="card-text fs-2 text-end">{{ onHoldProjectsCount }}</p>
+							</div>
+						</a>
+					</div>
+
+					<div class="card text-white bg-success m-3 text-right" style="max-width: 18rem;">
+						<a class="nav-link" href="{{ path('app_project_manager_projects', {status: constant('App\\Entity\\ProjectDetails::PROJECT_STATUS_COMPLETED')}) }}">
+							<div class="card-body m-2">
+								<h5 class="card-title p-1">Completed</h5>
+								<p class="card-text fs-2 text-end">{{ completedProjectsCount }}</p>
+							</div>
+						</a>
+					</div>
+				</div>
+
+			</div>
+			{# project div #}
+		</div>
+
+		<div class="container-fluid mt-3 d-flex">
+			<div class="d-flex m-3">
+				<div class="m-3 p-4 rounded bg-light" style="max-width: 400px">
+					<h3>Tasks</h3>
+					{{ render_chart(chartTask) }}
+				</div>
+				<div class="row justify-content-center m-5">
+					<h1>Tasks</h1>
+
+					<table class=" table-hover table mt-5" style="width: 800px;">
+						<tr class="table-primary">
+							<td class="p-3">
+								<a class="text-decoration-none text-reset" href="{{ path('app_project_manager_tasks') }}">
+									<div>Total Tasks</div>
+								</a>
+							</td>
+							<td class="p-3">
+								<a class="text-decoration-none text-reset" href="{{ path('app_project_manager_tasks') }}">
+									<div>{{ allTaskCount }}</div>
+								</a>
+							</td>
+						</tr>
+						<tr class="table-danger">
+							<td class="p-3">
+								<a class="text-decoration-none text-reset" href="{{ path('app_project_manager_tasks', {status: constant('App\\Entity\\TaskWithProject::TASK_STATUS_IN_PROGRESS')}) }}">
+									<div>In Progress</div>
+								</a>
+							</td>
+							<td class="p-3">
+								<a class="text-decoration-none text-reset" href="{{ path('app_project_manager_tasks', {status: constant('App\\Entity\\TaskWithProject::TASK_STATUS_IN_PROGRESS')}) }}">
+									<div>{{ inProgressTaskCount }}</div>
+								</a>
+							</td>
+						</tr>
+						<tr class="table-secondary">
+							<td class="p-3">
+								<a class="text-decoration-none text-reset" href="{{ path('app_project_manager_tasks', {status: constant('App\\Entity\\TaskWithProject::TASK_STATUS_OPEN')}) }}">
+									<div>Open</div>
+								</a>
+							</td>
+							<td class="p-3">
+								<a class="text-decoration-none text-reset" href="{{ path('app_project_manager_tasks', {status: constant('App\\Entity\\TaskWithProject::TASK_STATUS_OPEN')}) }}">
+									<div>{{ openTaskCount }}</div>
+								</a>
+							</td>
+						</tr>
+						<tr class="table-warning">
+							<td class="p-3">
+								<a class="text-decoration-none text-reset" href="{{ path('app_project_manager_tasks', {status: constant('App\\Entity\\TaskWithProject::TASK_STATUS_ON_HOLD')}) }}">
+									<div>On Hold</div>
+								</a>
+							</td>
+							<td class="p-3">
+								<a class="text-decoration-none text-reset" href="{{ path('app_project_manager_tasks', {status: constant('App\\Entity\\TaskWithProject::TASK_STATUS_ON_HOLD')}) }}">
+									<div>{{ onHoldTaskCount }}</div>
+								</a>
+							</td>
+						</tr>
+						<tr class="table-success">
+							<td class="p-3">
+								<a class="text-decoration-none text-reset" href="{{ path('app_project_manager_tasks', {status: constant('App\\Entity\\TaskWithProject::TASK_STATUS_COMPLETED')}) }}">
+									<div>Completed</div>
+								</a>
+							</td>
+							<td class="p-3">
+								<a class="text-decoration-none text-reset" href="{{ path('app_project_manager_tasks', {status: constant('App\\Entity\\TaskWithProject::TASK_STATUS_COMPLETED')}) }}">
+									<div>{{ completedTaskCount }}</div>
+								</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

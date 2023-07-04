@@ -1,0 +1,62 @@
+{% extends 'pdf/base.html.twig' %}
+
+{% block title %}
+	Project Report
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div style="padding: 20px;">
+		<div style="margin-bottom: 30px;">
+			<h2 style="text-align: center;">Project Report</h2>
+			<hr style="border: none; height: 2px; background-color: #ccc; margin: 20px 0;">
+		</div>
+		<div class="my-4">
+			<h4 class="fw-bold">Project Details</h4>
+			<hr class="my-2">
+
+			<div class="row">
+				<div class="col-md-6">
+					<p class="mb-2">
+						<span class="fw-bold">Project Name:</span>
+						{{ project.name }}
+					</p>
+					<p class="mb-2">
+						<span class="fw-bold">Project Description:</span>
+						{{ project.Description }}
+					</p>
+					<p class="mb-2">
+						<span class="fw-bold">Project Manager:</span>
+						{{ project.ProjectManager.Name }}
+					</p>
+				</div>
+
+				<div class="col-md-6">
+					<p class="mb-2">
+						<span class="fw-bold">Start Date:</span>
+						{{ project.startDate|date('d-m-Y') }}
+					</p>
+					<p class="mb-2">
+						<span class="fw-bold">End Date:</span>
+						{{ project.endDate|date('d-m-Y') }}
+					</p>
+					<p class="mb-2">
+						<span class="fw-bold">Status:</span>
+						<span class="badge bg-success">{{ project.Status }}</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="page_break"></div>
+		<div style="margin-bottom: 30px;">
+			<h2>Project Tasks</h2>
+			{{ include('parts/_show_tasks.html.twig') }}
+		</div>
+
+		<div>
+			<h2>Project Team</h2>
+			{{ include('parts/_show_employee.html.twig') }}
+		</div>
+	</div>
+{% endblock %}

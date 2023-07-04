@@ -1,0 +1,118 @@
+{% extends 'employee/index.html.twig' %}
+
+{% block OprationPannel %}
+	<script src="{{ asset('js/script.js') }}"></script>
+	<h1>Show Tasks</h1>
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="card ">
+			<div class="card-body">
+				{% if tasks.nbResults <= 0 %}
+					<div class="alert alert-danger" role="alert">
+						Opps! No Task Found
+					</div>
+				{% else %}
+					<table class=" table-hover table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Sr</th>
+								<th scope="col">Project</th>
+								<th scope="col">Title</th>
+								<th scope="col">Priority</th>
+								<th scope="col">Status</th>
+								<th scope="col">Progress</th>
+								<th scope="col">Start Date</th>
+								<th scope="col">Due Date</th>
+								<th scope="col">Start Timer</th>
+								<th scope="col">Worked Time</th>
+								<th scope="col">View</th>
+								<th scope="col">Download</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% set count = 1 %}
+							{% for task in tasks %}
+								<tr>
+									<th scope="row">{{ count }}</th>
+									<td>{{ task.project.name }}</td>
+									<td>{{ task.title }}</td>
+									<td class="{{task.Priority| task_priority}}">{{ task.Priority }}</td>
+
+									<td>
+										<div class="dropdown dropend">
+											<button class="btn btn-outline-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+												{{ task.Status }}
+											</button>
+											<ul class="dropdown-menu">
+												{% for taskStatus in constant('App\\Entity\\TaskWithProject::TASK_STATUS_ARRAY') %}
+													<li>
+														<a class="dropdown-item {% if taskStatus == task.Status %}active{% endif %}" href="{{ path('change_task_status', { id: task.id, status: taskStatus, from: 'taskPage' }) }}">
+															{{ taskStatus }}
+														</a>
+													</li>
+												{% endfor %}
+											</ul>
+										</div>
+									</td>
+									<td>
+										{% if task.status == constant('App\\Entity\\TaskWithProject::TASK_STATUS_IN_PROGRESS') %}
+											<div class="dropdown dropend">
+												<button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+													{{ task.progress }}%
+												</button>
+												<ul class="dropdown-menu">
+													{% for i in 0..10 %}
+														{% if task.progress == i * 10 %}
+															<li>
+																<a class="dropdown-item active" href="{{ path('task_progress_changer', { taskId: task.id, progress: i * 10 }) }}">{{ i * 10 }}%</a>
+															</li>
+														{% else %}
+															<li>
+																<a class="dropdown-item" href="{{ path('task_progress_changer', { taskId: task.id, progress: i * 10 }) }}">{{ i * 10 }}%</a>
+															</li>
+														{% endif %}
+													{% endfor %}
+												</ul>
+											</div>
+										{% else %}
+											<button class="btn btn-outline-secondary" disabled>{{ task.progress }}%</button>
+										{% endif %}
+									</td>
+									<td>{{ task.ActualStartDate | date('d-m-Y') }}</td>
+									<td>{{ task.ActualEndDate | date('d-m-Y') }}</td>
+									<td>
+										{% if task.status == constant('App\\Entity\\TaskWithProject::TASK_STATUS_IN_PROGRESS') %}
+											<div class="">
+												<button onclick="data(btn{{ task.id }}, timer{{ task.id }}, '{{ task.timer|date('H:i:s') }}')" id="btn{{ task.id }}" class="btn taskTimerBtn btn-primary">Start</button>
+												<p id="timer{{ task.id }}">00:00:00</p>
+											</div>
+										{% else %}
+											<button class="btn btn-secondary" disabled>Start</button>
+										{% endif %}
+									</td>
+									<td id="totalTime{{ task.id }}">{{ task.timer|date('H:i:s') }}</td>
+									<td>
+										<a href="{{ path('view_task', { tid: task.id, id: task.project.id }) }}">
+											<button type="button" class="btn btn-outline-info">View</button>
+										</a>
+									</td>
+									<td>
+										<a href="{{ path('app_pdf_generator', { ProjectId: task.Project.id }) }}" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">
+											<i class="fa fa-download"></i>
+											Download PDF
+										</a>
+									</td>
+								</tr>
+								{% set count = count + 1 %}
+							{% endfor %}
+						</tbody>
+					</table>
+					{{ pagerfanta(tasks) }}
+				{% endif %}
+				{# <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> #}
+			</div>
+		</div>
+	</div>
+{% endblock %}

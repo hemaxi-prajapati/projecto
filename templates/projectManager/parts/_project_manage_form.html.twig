@@ -1,0 +1,23 @@
+{{ form_start(createProjectForm) }}
+{{ form_row(createProjectForm.Name )  }}
+{{ form_row(createProjectForm.Description) }}
+{{ form_row(createProjectForm.StartDate) }}
+{{ form_row(createProjectForm.EndDate) }}
+{{ form_row(createProjectForm.Status) }}
+{{ form_row(createProjectForm.projectAttenchment, {'attr': {'class': 'form-control', 'accept': 'application/pdf'}}) }}
+<div class="d-flex col mb-3">
+	<button type="submit" class="btn btn-primary" id="createProjectBtn">Submit</button>
+	{% if createProjectForm.vars.data.attachment %}
+		<button type="button" class="ms-3 btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+			Open Attachment
+		</button>
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content">
+					<embed src="{{ createProjectForm.vars.data.UrlAttachment }}" width="400" height="528" type="application/pdf">
+				</div>
+			</div>
+		</div>
+	{% endif %}
+</div>
+{{ form_end(createProjectForm) }}

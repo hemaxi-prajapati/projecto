@@ -1,0 +1,35 @@
+<div class="float-left d-flex">
+	<button type="button" id="checkInCheckOutBtn" onclick="checkInCheckOutClick()" value="stop" class="btn btn-outline-light me-2">
+		<div class="d-none" id="userId">
+			{{ app.user.id }}
+		</div>
+		<span id="checkInCheckOutTimer" class="d-flex align-items-center">
+			<i class="fa fa-play" id="playPauseBtn" aria-hidden="true"></i>
+			<div class="hrs">00</div>
+			<div class="colon">:</div>
+			<div class="min">00</div>
+			<div class="colon">:</div>
+			<div class="sec">00</div>
+		</span>
+	</button>
+	<div class="btn-group">
+		<button type="button" class="btn dropdown-toggle btn-{{ is_granted('ROLE_PREVIOUS_ADMIN') ? 'warning' : 'light' }}" data-bs-toggle="dropdown" aria-expanded="false">
+			<img src="{{ app.user.profileUrl }}" referrerpolicy="no-referrer" style="width: 35px; height: 35px;" class="rounded" alt="">
+			{{ app.user.name }}
+		</button>
+		<ul class="dropdown-menu dropdown-menu-end">
+			<li>
+				<a class="dropdown-item" href="{{ path('profile_page') }}">Profile</a>
+			</li>
+			{% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+				<li>
+					<a class="dropdown-item" href="{{ path('check_user_role', {'_switch_user': '_exit'}) }}">Go Back To Main Role</a>
+				</li>
+			{% else %}
+				<li>
+					<a class="dropdown-item" href="/logout">Logout</a>
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+</div>

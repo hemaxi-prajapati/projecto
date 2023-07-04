@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Dashboard
+{% endblock %}
+{% block navbar_options %}
+	{% if app.user.roles == is_granted(constant("App\\Entity\\User::ROLE_TEAM_MANAGER")) %}
+		{{ include('teamManager/parts/_navbar_tm.html.twig') }}
+	{% elseif app.user.roles == is_granted(constant("App\\Entity\\User::ROLE_PROJECT_MANAGER")) %}
+		{{ include('projectManager/parts/_navbar_pm.html.twig') }}
+	{% elseif app.user.roles == is_granted(constant("App\\Entity\\User::ROLE_USER")) %}
+		{{ include('employee/parts/_navbar_employee.html.twig') }}
+	{% endif %}
+{% endblock %}
+{% block body %}
+	<div class="container">
+		<div class="card mt-3">
+			<div class="card-body">
+				<h1 class="text-center">Edit your Profile</h1>
+				<p>Email:
+					{{ app.user.email }}</p>
+				<p>Department:
+					{{ app.user.department ? app.user.department.name : "Yet To Assign"}}</p>
+				{{ form_start(profileForm)}}
+				{% if app.user.loginFrom == constant("App\\Entity\\User::USER_LOGIN_FROM_PROJECTO") %}
+					<div class="row">
+						<div class="col-sm-9">
+							{{ form_row(profileForm.profileImage, {'attr': {'accept': 'image/*','onchange':"showPreview(event);"}}) }}
+						</div>
+						<div class="col-sm-3 align-self-center">
+							<img id="preview-image" src="{{ app.user.profileUrl }}" style="width:100px;height:100px;" class="rounded img-thumbnail" alt="">
+						</div>
+					</div>
+
+				{% endif %}
+				{{ form_row(profileForm.Firstname) }}
+				{{ form_row(profileForm.LastName) }}
+				{{ form_row(profileForm.ContactNumber) }}
+				{{ form_row(profileForm.exprience) }}
+				<button type="submit" class="btn btn-primary btn-sm">
+					Update!</button>
+				{{ form_row(profileForm._token) }}
+				{{ form_end(profileForm, {'render_rest': false}) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block customjs %}
+	<script src="{{ asset('js/profilerPage.js') }}"></script>
+{% endblock %}

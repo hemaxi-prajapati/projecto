@@ -1,0 +1,45 @@
+{% extends 'email/email.base.html.twig'%}
+    
+{% block content %}
+	<div class="content">
+		<h1 class="text-center">
+			{{ projectAssignmentUser.Name }}
+			{{ projectAssignment.Status}}
+			for
+			{{ projectAssignmentProject.Name }}
+		</h1>
+		<p class="block ">
+			Dear
+			<strong>
+				{{ projectAssignmentProjectManager.Name }},
+			</strong>
+		</p>
+		<br/>
+		<p class="block text-center">
+			Requested User  Status Have been Updated
+		</p>
+		<p class="block text-center">
+			<a href="{{ url('project_manager_dashboard') }}">
+				<button class="btn btn-lg btn-primary">
+					Click here Assign in Project
+				</button>
+			</a>
+		</p>
+		<p class="block">
+			Project Name :
+			{{ projectAssignmentProject.Name }}
+		</p>
+		<p class="block">
+			Project start date :
+			{{ projectAssignmentProject.StartDate |date('d-m-y') }}
+		</p>
+		<p class="block">
+			Project start date :
+			{{ projectAssignmentProject.EndDate |date('d-m-y') }}
+		</p>
+		<p class="block">
+			Status  :
+			{{ projectAssignmentProject.Status }}
+		</p>
+	</div>
+{% endblock %}

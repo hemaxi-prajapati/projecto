@@ -1,0 +1,78 @@
+{# This Project shows Task Object in tabular form #}
+{% if (projectReport is defined and projectReport) %}
+	{% set checkCount = taskArray|length   %}
+{% else %}
+	{% set checkCount = taskArray.nbResults   %}
+{% endif %}
+{% if checkCount <= 0 %}
+	<div class="alert alert-danger" role="alert">
+		Oops! No Task found.
+	</div>
+{% else %}
+	<div class="task-table-container  mt-3">
+		<table class=" table-hover table table-bordered">
+			<thead>
+				<tr>
+					<th scope="col">Sr</th>
+					<th scope="col">Title</th>
+					<th scope="col">Description</th>
+					<th scope="col">Priority</th>
+					<th scope="col">Status</th>
+					<th scope="col">Progress</th>
+					<th scope="col">Start Date</th>
+					<th scope="col">End Date</th>
+					{% if (projectReport is defined and projectReport) %}
+						{% else %}
+							{% if app.request.get('id')  %}
+								<th scope="col">Manage</th>
+							{% else %}
+								<th scope="col">Project Name</th>
+								<th scope="col">Manage</th>
+							{% endif %}
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% set count=1 %}
+				{% for task in taskArray %}
+					<tr>
+						<td scope="row">{{ count }}</td>
+						<td>{{ task.Title }}</td>
+						<td class="ml-2">{{ task.Description }}</td>
+						<td class=" {{task.Priority | task_priority}}  text-white">
+							{{task.Priority }}
+						</td>
+						<td class="{{task.Status | task_status }} text-white">
+							{{task.Status  }}
+						</td>
+						<td>{{ task.progress }}</td>
+						<td>{{ task.ActualStartDate | date('d-m-y') }}</td>
+						<td>{{ task.ActualEndDate | date('d-m-y') }}</td>
+						{% if (projectReport is defined and projectReport) %}
+							{% else %}
+								{% if app.request.get('id')  %}
+									<td>
+										<div class="d-flex">
+											<a href="{{ path('view_task',{id:project.id,tid:task.id}) }}" class="btn btn-success" role="button">View</a>
+										</div>
+									</td>
+								{% else %}
+									<td>{{ task.Project.Name }}</td>
+									<td>
+										<div class="d-flex">
+											<a href="{{ path('view_task',{id:task.Project.id,tid:task.id}) }}" class="btn btn-success" role="button">View</a>
+										</div>
+									</td>
+								{% endif %}
+						{% endif %}
+					</tr>
+					{% set count=count+1 %}
+				{% endfor %}
+			</tbody>
+		</table>
+		{% if (projectReport is defined and projectReport) %}
+			{% else %}
+				{{ pagerfanta(taskArray) }}
+		{% endif %}
+	</div>
+{% endif %}

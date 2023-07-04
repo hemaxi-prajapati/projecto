@@ -1,0 +1,9 @@
+<li class="nav-item">
+	<a class="nav-link text-white" aria-current="page" href="{{ path('show_my_checkin_check_out') }}">Check In</a>
+</li>
+
+{% if app.user.loginFrom is not null and app.user.loginFrom == constant("App\\Entity\\User::USER_LOGIN_FROM_MS_OFFICE") %}
+	<li class="nav-item">
+		<a class="nav-link text-white" aria-current="page" href="{{ path('meeting_view') }}">Meetings</a>
+	</li>
+{% endif %}

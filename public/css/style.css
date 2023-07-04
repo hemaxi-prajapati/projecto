@@ -1,0 +1,46 @@
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text {
+    margin-bottom: 1rem;
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+.dropdown-togglex {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.dropdown-menu {
+    background-color: #fff;
+}
+
+.dropdown-item {
+    color: #212529;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    padding: 0.75rem 1.25rem;
+}
+
+.card-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}

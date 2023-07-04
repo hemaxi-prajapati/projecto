@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}
+				| Team Manager
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><text y='1.2em' font-size='96'>🎯</text></svg>">
+		<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+		{% block customcss %}{% endblock %}
+		<link rel="stylesheet" href="{{ asset('css/base_all_need.css')}}">
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="{{ path('home_page') }}">
+					<img src="{{ asset('images/logo.png') }}" alt="Projecto" width="150">
+				</a>
+
+				{% block navbar_options %}
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a class="nav-link text-white" href="/login">Login</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-white" href="/register">Register</a>
+							</li>
+						</ul>
+					</div>
+				{% endblock %}
+			</div>
+		</nav>
+
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+			<div class="container">
+				<div class="d-flex justify-content-between mt-4 animate__animated animate__fadeIn"> {% block OprationPannel %}{% endblock %}
+					</div>
+				</div>
+			{% endif %}
+
+			<div class="w-100 position-fixed alertBoxMain ">
+				{% for success in app.flashes('success') %}
+					<div class="alert alertFlash w-25 float-end alert-success alert-dismissible fade show " role="alert">
+						{{ success }}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						<div class="progress">
+							<div class="progress-bar progress-bar-animated progress-animation bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				{% endfor %}
+
+				{% for warning in app.flashes('warning') %}
+					<div class="alert w-25 alertFlash float-end alert-danger alert-dismissible fade show " role="alert">
+						{{ warning }}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						<div class="progress">
+							<div class="progress-bar progress-bar-animated progress-animation bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+
+			<div class="min-vh-100">
+				<div class="text-center">
+					<img id="globle_loader" src="{{ asset('images/small_loader.gif') }}" alt="" class="animate__animated animate__fadeIn">
+				</div>
+				{% block body %}{% endblock %}
+			</div>
+
+			<footer class="text-center text-lg-start bg-light text-muted pt-1">
+				<section class="">
+					<div class="container text-center text-md-start mt-5">
+						<div class="row mt-3">
+							<div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+								<h6 class="text-uppercase fw-bold mb-4">Projecto</h6>
+								<p>
+									Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+								</p>
+							</div>
+							<div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+								<h6 class="text-uppercase fw-bold mb-4">Products</h6>
+								<p>
+									<a href="#!" class="text-reset">Angular</a>
+								</p>
+								<p>
+									<a href="#!" class="text-reset">React</a>
+								</p>
+								<p>
+									<a href="#!" class="text-reset">Vue</a>
+								</p>
+								<p>
+									<a href="#!" class="text-reset">Laravel</a>
+								</p>
+							</div>
+							<div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+								<h6 class="text-uppercase fw-bold mb-4">Useful links</h6>
+								<p>
+									<a href="{{ path('home_page') }}" class="text-reset">Home</a>
+								</p>
+								<p>
+									<a href="{{ path('app_login') }}" class="text-reset">Login</a>
+								</p>
+								<p>
+									<a href="{{ path('app_register') }}" class="text-reset">SignUp</a>
+								</p>
+								<p>
+									<a href="{{ path('app_login_microsoft') }}" class="text-reset">Login With Microsoft</a>
+								</p>
+							</div>
+							<div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+								<h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+								<p>
+									<i class="fas fa-home me-3"></i>
+									Ahmedabad, Gujarat 380058
+								</p>
+								<p>
+									<i class="fas fa-envelope me-3"></i>
+									<a href="mailto:kartikpatelswami@gmail.com" class="" target="_blank">
+										Projecto@gmail.com
+									</a>
+								</p>
+								<p>
+									<i class="fas fa-phone me-3"></i>
+									<a href="call:7016418778" target="_blank">
+										+ 01 234 567 88
+									</a>
+								</p>
+								<p>
+									<i class="fas fa-print me-3"></i>
+									+ 01 234 567 89
+								</p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+					&copy; 2021 Projecto.com. All rights reserved.
+				</div>
+			</footer>
+			<script src="{{ asset('js/base_all_need.js') }}"></script>
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<script src="{{ asset('js/checkInCheckOutScript.js') }}"></script>
+			{% endif %}
+			<script src="https://kit.fontawesome.com/96e97f4edb.js" crossorigin="anonymous"></script>
+			{% block customjs %}{% endblock %}
+		</body>
+	</html>

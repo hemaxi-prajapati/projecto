@@ -1,0 +1,265 @@
+.add-task-container {
+  display: flex;
+  width: 20rem;
+  height: 5.3rem;
+  margin: auto;
+  background: #a8a8a8;
+  border: 0.2rem solid #000013;
+  border-radius: 0.2rem;
+  padding: 0.4rem;
+}
+
+.main-container {
+  display: flex;
+}
+
+.columns {
+  display: flex;
+  align-items: flex-start;
+  margin: 1.6rem auto;
+}
+
+.column {
+  width: 8.4rem;
+  margin: 0 0.6rem;
+  background: #a8a8a8;
+  border: 0.2rem solid #000013;
+  border-radius: 0.2rem;
+}
+
+.column-header {
+  padding: 0.1rem;
+  border-bottom: 0.2rem solid #000013;
+}
+
+.column-header h4 {
+  text-align: center;
+}
+
+.to-do-column .column-header {
+  background: #ff872f;
+}
+
+.doing-column .column-header {
+  background: #13a4d9;
+}
+
+.done-column .column-header {
+  background: #15d072;
+}
+
+.trash-column .column-header {
+  background: #ff4444;
+}
+
+.task-list {
+  min-height: 0.4rem;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+.column-button {
+  text-align: center;
+  padding: 0.1rem;
+}
+
+.button {
+  font-family: "Arimo", sans-serif;
+  font-weight: 700;
+  border: 0.14rem solid #000013;
+  border-radius: 0.2rem;
+  color: #000013;
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+}
+
+.delete-button {
+  background-color: #ff4444;
+  margin: 0.1rem auto 0.6rem auto;
+}
+
+.delete-button:hover {
+  background-color: #fa7070;
+}
+
+.add-button {
+  background-color: #ffcb1e;
+  padding: 0 1rem;
+  height: 2.8rem;
+  width: 10rem;
+  margin-top: 0.6rem;
+}
+
+.add-button:hover {
+  background-color: #ffdd6e;
+}
+
+.task {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  background: whitesmoke;
+  transition: all 0.3s;
+  margin: 0.4rem;
+  height: 4rem;
+  border: 0.15rem solid #000013;
+  border-radius: 0.2rem;
+  cursor: move;
+  text-align: center;
+}
+
+#taskText {
+  background: #fff;
+  border: 0.15rem solid #000013;
+  border-radius: 0.2rem;
+  text-align: center;
+  font-family: "Roboto Slab", serif;
+  height: 4rem;
+  width: 7rem;
+  margin: auto 0.8rem auto 0.1rem;
+}
+
+.task p {
+  margin: auto;
+}
+
+
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+}
+
+.gu-hide {
+  display: none !important;
+}
+
+.gu-unselectable {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
+
+.project-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.project-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.project-status {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #ff9800;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.project-description {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.project-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.detail-label {
+  font-weight: bold;
+  margin-right: 10px;
+  color: #666;
+}
+
+.detail-value {
+  color: #333;
+}
+
+
+.project-card {
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-color: #f8f9fa;
+}
+
+.project-card:hover {
+  background-color: #e9ecef;
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.project-name {
+  margin-bottom: 0;
+}
+
+.project-status {
+  font-weight: bold;
+}
+
+.project-description {
+  margin-top: 5px;
+}
+
+.project-details {
+  margin-top: 10px;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.detail-label {
+  font-weight: bold;
+  margin-right: 5px;
+}

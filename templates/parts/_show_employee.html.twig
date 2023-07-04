@@ -1,0 +1,93 @@
+{# this templet renders ProjectAssignment Object #}
+<div class="mt-3">
+	{% if is_granted(constant("App\\Entity\\User::ROLE_TEAM_MANAGER")) %}
+		{# only for team managers #}
+		{% if allprojects %}
+			{% set checkCount = pagerFanta.nbResults %}
+		{% else %}
+			{% set checkCount = projectAssign|length %}
+		{% endif %}
+	{% else %}
+		{% if projectReport is defined and projectReport %}
+			{% set checkCount = projectAssign|length %}
+		{% else %}
+			{% set checkCount = projectAssign.nbResults %}
+		{% endif %}
+	{% endif %}
+	{% if checkCount <= 0 %}
+		<div class="alert alert-danger" role="alert">
+			Oops! No employees found.
+		</div>
+	{% else %}
+		<table class=" table-hover table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Sr</th>
+					<th scope="col">User ID</th>
+					<th scope="col">User Name</th>
+					<th scope="col">User Department</th>
+					{% if is_granted(constant("App\\Entity\\User::ROLE_TEAM_MANAGER")) %}
+						{% if allprojects %}
+							<th scope="col">Project Name</th>
+							<th scope="col">Project Description</th>
+							<th scope="col">Project Manager Name</th>
+						{% endif %}
+					{% endif %}
+					<th scope="col">Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% set count = 1 %}
+				{% for ProjectAssignment in projectAssign %}
+					<tr>
+						<th scope="row">{{ count }}</th>
+						<td>{{ ProjectAssignment.User.id }}</td>
+						<td>{{ ProjectAssignment.User.name }}</td>
+						<td>{{ ProjectAssignment.User.Department }}</td>
+						{% if projectReport is defined and projectReport %}
+							<td>{{ ProjectAssignment.status }}</td>
+						{% else %}
+							{% if is_granted(constant("App\\Entity\\User::ROLE_TEAM_MANAGER")) %}
+								{% if allprojects %}
+									<td>{{ ProjectAssignment.project.name }}</td>
+									<td>{{ ProjectAssignment.project.description }}</td>
+									<td>{{ ProjectAssignment.project.ProjectManager.name }}</td>
+								{% endif %}
+								{% if ProjectAssignment.status == constant('App\\Entity\\ProjectAssignment::USER_TASK_STATUS_YET_TO_ASSIGN') and app.User.Department == ProjectAssignment.User.Department %}
+									<td>
+										<div class="d-flex">
+											<a class="me-3" href="{{ path('need_approved_change_status', { opration: 'Approved', id: ProjectAssignment.id }) }}">
+												<button class="btn btn-success">Approve</button>
+											</a>
+											<a href="{{ path('need_approved_change_status', { opration: 'Rejected', id: ProjectAssignment.id }) }}">
+												<button class="btn btn-danger">Reject</button>
+											</a>
+										</div>
+									</td>
+								{% else %}
+									<td>{{ ProjectAssignment.status }}</td>
+								{% endif %}
+							{% else %}
+								<td>{{ ProjectAssignment.status }}</td>
+							{% endif %}
+						{% endif %}
+					</tr>
+					{% set count = count + 1 %}
+				{% endfor %}
+			</tbody>
+		</table>
+		{% if projectReport is defined and projectReport %}
+			{# do nothing for project reports #}
+		{% else %}
+			{# only for team managers #}
+			{% if is_granted(constant("App\\Entity\\User::ROLE_TEAM_MANAGER")) %}
+				{% if allprojects %}
+					{{ pagerfanta(pagerFanta) }}
+				{% endif %}
+				{# only for project managers #}
+			{% else %}
+				{{ pagerfanta(projectAssign) }}
+			{% endif %}
+		{% endif %}
+	{% endif %}
+</div>
